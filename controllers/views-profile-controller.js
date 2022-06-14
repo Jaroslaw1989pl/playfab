@@ -1,131 +1,132 @@
 // custom modules
 const EmailUpdate = require('../models/settings-email.class');
-const BirthdayUpdate = require('./../models/settings-birthday.class');
-const NameUpdate = require('./../models/settings-name.class');
-const DeleteUser = require('./../models/auth-delete.class');
-const NewPassword = require('./../models/auth-new-password.class');
+const BirthdayUpdate = require('../models/settings-birthday.class');
+const NameUpdate = require('../models/settings-name.class');
+const DeleteUser = require('../models/auth-delete.class');
+// const NewPassword = require('../models/auth-new-password.class');
 const PasswordUpdate = require('../models/settings-password');
 
 
 /*** PUBLIC VIEWS ***/
 
-exports.home = (request, response, next) => {
-  let data = {
-    html: {
-      title: 'Playfab | Home page'
-    }
-  };
-  response.render('home.ejs', data);
-};
+// exports.home = (request, response, next) => {
+//   let data = {
+//     html: {
+//       title: 'Playfab | Home page'
+//     }
+//   };
+//   response.render('home.ejs', data);
+// };
 
-exports.games = (request, response, next) => {
-  let data = {
-    html: {
-      title: 'Playfab | Games'
-    }
-  };
-  response.render('games.ejs', data);
-};
+// exports.games = (request, response, next) => {
+//   let data = {
+//     html: {
+//       title: 'Playfab | Games'
+//     }
+//   };
+//   response.render('games.ejs', data);
+// };
 
-exports.gamesCheckers = (request, response, next) => {
-  let data = {
-    html: {
-      title: 'Playfab | Checkers'
-    }
-  };
-  response.render('games-checkers.ejs', data);
-};
+// exports.gamesCheckers = (request, response, next) => {
+//   let data = {
+//     html: {
+//       title: 'Playfab | Checkers'
+//     }
+//   };
+//   request.session.referer = request.url;
+//   response.render('games-checkers.ejs', data);
+// };
 
 /*** AUTHENTICATION ***/
 
 /*** USER REGISTRATION ***/
 
-exports.registrationForm = (request, response, next) => {
-  let data = {
-    html: {
-      title: 'Playfab | Sign up'
-    },
-    inputs: request.session.inputs,
-    errors: request.session.errors,
-    isRegistrationCompleted: request.session.isRegistrationCompleted
-  };
+// exports.registrationForm = (request, response, next) => {
+//   let data = {
+//     html: {
+//       title: 'Playfab | Sign up'
+//     },
+//     inputs: request.session.inputs,
+//     errors: request.session.errors,
+//     isRegistrationCompleted: request.session.isRegistrationCompleted
+//   };
 
-  request.session.inputs = undefined;
-  request.session.errors = undefined;
-  request.session.isRegistrationCompleted = undefined;
+//   request.session.inputs = undefined;
+//   request.session.errors = undefined;
+//   request.session.isRegistrationCompleted = undefined;
 
-  response.render('auth-registration.ejs', data);
-};
+//   response.render('auth-registration.ejs', data);
+// };
 
-/*** USER LOGIN ***/
+// /*** USER LOGIN ***/
 
-exports.loginForm = (request, response, next) => {
-  let data = {
-    html: {
-      title: 'Playfab | Sign in'
-    },
-    inputs: request.session.inputs,
-    errors: request.session.errors
-  };
+// exports.loginForm = (request, response, next) => {
+//   let data = {
+//     html: {
+//       title: 'Playfab | Sign in'
+//     },
+//     inputs: request.session.inputs,
+//     errors: request.session.errors
+//   };
 
-  request.session.inputs = undefined;
-  request.session.errors = undefined;
+//   request.session.inputs = undefined;
+//   request.session.errors = undefined;
 
-  response.render('auth-login.ejs', data);
-};
+//   response.render('auth-login.ejs', data);
+// };
 
-/*** RESET PASSWORD ***/
+// /*** RESET PASSWORD ***/
 
-exports.resetPassword = (request, response, next) => {
-  let data = {
-    html: {
-      title: 'Playfab | Reset password'
-    },
-    inputs: request.session.inputs,
-    errors: request.session.errors,
-    isEmailSent: request.session.isEmailSent
-  };
+// exports.resetPassword = (request, response, next) => {
+//   let data = {
+//     html: {
+//       title: 'Playfab | Reset password'
+//     },
+//     inputs: request.session.inputs,
+//     errors: request.session.errors,
+//     isEmailSent: request.session.isEmailSent
+//   };
 
-  request.session.inputs = undefined;
-  request.session.errors = undefined;
-  request.session.isEmailSent = undefined;
+//   request.session.inputs = undefined;
+//   request.session.errors = undefined;
+//   request.session.isEmailSent = undefined;
 
-  response.render('auth-reset-password.ejs', data);
-};
+//   response.render('auth-reset-password.ejs', data);
+// };
 
-/*** NEW PASSWORD ***/
+// /*** NEW PASSWORD ***/
 
-exports.newPassword = (request, response, next) => {
-  const newPassword = new NewPassword();
-  newPassword.tokenValidation(request.params.token)
-  .then(result => {
-    if (result.length === 0) {
-      response.redirect('/reset-password');
-    } else if (result[0].expire_date < parseInt(Date.now() / 1000)) {
-      // deleting old token
-      newPassword.deleteToken();
-      response.redirect('/reset-password');
-    } else {
-      let data = {
-        html: {
-          title: 'Playfab | New password'
-        },
-        email: result[0].email,
-        token: result[0].token,
-        inputs: request.session.inputs,
-        errors: request.session.errors,
-        isPasswordChanged: request.session.isPasswordChanged
-      };
+// exports.newPassword = (request, response, next) => {
+//   const newPassword = new NewPassword();
+//   newPassword.tokenValidation(request.params.token)
+//   .then(result => {
+//     if (result.length === 0) {
+//       response.redirect('/reset-password');
+//     } else if (result[0].expire_date < parseInt(Date.now() / 1000)) {
+//       // deleting old token
+//       newPassword.deleteToken();
+//       response.redirect('/reset-password');
+//     } else {
+//       let data = {
+//         html: {
+//           title: 'Playfab | New password'
+//         },
+//         email: result[0].email,
+//         token: result[0].token,
+//         inputs: request.session.inputs,
+//         errors: request.session.errors,
+//         isPasswordChanged: request.session.isPasswordChanged
+//       };
 
-      request.session.inputs = undefined;
-      request.session.errors = undefined;
-      request.session.isPasswordChanged = undefined;
+//       request.session.inputs = undefined;
+//       request.session.errors = undefined;
+//       request.session.isPasswordChanged = undefined;
 
-      response.render('auth-new-password.ejs', data);
-    }
-  })
-  .catch( error => console.log(error));
-};
+//       response.render('auth-new-password.ejs', data);
+//     }
+//   })
+//   .catch( error => console.log(error));
+// };
 
 /*** PROTECTED ROUTES ***/
 

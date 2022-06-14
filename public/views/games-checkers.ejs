@@ -1,13 +1,20 @@
 <%- include('../includes/game-head.ejs') %>
-  
+
+<!-- SCRIPTS -->
+<script src="/scripts/games-checkers.js" defer></script>
+
   <main>
 
-    <h1>Checkers</h1>
+    <h1 id="game-title">Checkers</h1>
+
+    <div id="game-types">
+      <button id="checkers-classic">Classic checkers</button>
+      <button id="checkers-10x10">10x10 checkers</button>
+    </div>
 
     <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
 
-      <form action="/games/checkers-create-player" method="POST">
-        <input type="text" value="<%= user.name %>" hidden>
+      <form id="form" action="" method="POST">
         <input type="submit" value="Join">
       </form>
 
@@ -15,8 +22,7 @@
             
       <a href="/login"><button>Sign in</button></a>
 
-      <form action="/games/checkers-create-player" method="POST">
-        <input type="text" value="<%= parseInt(Date.now() / 1000) %>" hidden>
+      <form id="form" action="" method="POST">
         <input type="submit" value="Guest">
       </form>
         

@@ -100,7 +100,7 @@ exports.login = (request, response, next) => {
   const form = new Login();
   
   form.setUserData(formData);
-
+  
   // 1. Inputs validation
   if (!form.emailValidation() || !form.passValidation()) {
     request.session.errors = 'Invalid username or password.';
@@ -122,7 +122,9 @@ exports.login = (request, response, next) => {
             .then(result => {
               request.session.user = user.setUser(result[0]);
               request.session.isLoggedIn = true;
-              response.redirect('/');
+              let referer = request.session.referer;
+              request.session.referer = undefined;
+              response.redirect(referer || '/');
             })
             .catch(error => console.log(error));
           } else {
