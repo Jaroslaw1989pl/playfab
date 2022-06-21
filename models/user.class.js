@@ -10,10 +10,11 @@ class User {
   }
 
   addUser(formData) {
-    const query = `INSERT INTO registrated_users (user_name, name_update, user_email, email_update, user_password, password_update) 
-                 VALUES (?, ?, ?, ?, ?, ?)`;
+    const query = `INSERT INTO registrated_users (first_name, last_name, name_update, user_email, email_update, user_password, password_update) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?)`;
     let values = [
-      formData.userName,
+      formData.firstName,
+      formData.lastName,
       parseInt(Date.now() / 1000),
       formData.userEmail,
       parseInt(Date.now() / 1000),
@@ -26,14 +27,13 @@ class User {
         if (error) reject(error);
         else {
           // getting new user id
-          const query = `SELECT user_id FROM registrated_users WHERE user_name = ?`;
-          this.database.connection.query(query, formData.userName, (error, result, fields) => {
+          const query = `SELECT user_id FROM registrated_users WHERE user_email = ?`;
+          this.database.connection.query(query, formData.userEmail, (error, result, fields) => {
             if (error) reject(error);
             else {
               // adding new user to other tables
-              const query = `INSERT INTO users_profiles (user_id, gold) VALUES (?, ?)`;
-              let values = [result[0].user_id, 100];
-              this.database.connection.query(query, values, (error, result, fields) => {
+              const query = `INSERT INTO users_profiles (user_id) VALUES (?)`;
+              this.database.connection.query(query, result[0].user_id, (error, result, fields) => {
                 if (error) reject(error);
                 else resolve(result);
               });
@@ -45,8 +45,9 @@ class User {
   }
 
   addSpace(name) {
-    if (!fs.existsSync('spaces/' + name)) {
-      fs.mkdir('spaces/' + name, error => console.log(error));
+    const space = name.replace(/@|\./gi, '-');
+    if (!fs.existsSync('spaces/' + space)) {
+      fs.mkdir('spaces/' + space, error => console.log(error));
     }
   }
 
@@ -64,7 +65,8 @@ class User {
   setUser(userData) {
     return {
       id: userData.user_id,
-      name: userData.user_name,
+      firstName: userData.first_name,
+      lastName: userData.last_name,
       nameUpdate: userData.name_update,
       email: userData.user_email,
       emailUpdate: userData.email_update,

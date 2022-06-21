@@ -11,16 +11,16 @@ const DeleteUser = require('./../models/auth-delete.class');
 
 /*** USER REGISTRATION ***/
 
-exports.findUserName = (request, response, next) => {
-  // const form = new Registration();
-  // form.getUserName(request.query.userName)
-  (new Registration()).getUserName(request.query.userName)
-  .then(data => {
-    if (data.length > 0) response.send(true);
-    else response.send(false);
-  })
-  .catch(error => console.log(error));
-};
+// exports.findUserName = (request, response, next) => {
+//   // const form = new Registration();
+//   // form.getUserName(request.query.userName)
+//   (new Registration()).getUserName(request.query.userName)
+//   .then(data => {
+//     if (data.length > 0) response.send(true);
+//     else response.send(false);
+//   })
+//   .catch(error => console.log(error));
+// };
 
 exports.findUserEmail = (request, response, next) => {
 (new Registration()).getUserEmail(request.query.userEmail)
@@ -33,7 +33,8 @@ exports.findUserEmail = (request, response, next) => {
 
 exports.registration = (request, response, next) => {
   let formData = {
-    userName: request.body.userName,
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
     userEmail: request.body.userEmail,
     userPass: request.body.userPass,
     passConf: request.body.passConf
@@ -44,21 +45,14 @@ exports.registration = (request, response, next) => {
   form.setUserData(formData);
 
   // 1. validating user inputs
-  form.nameValidation();
+  form.firstNameValidation();
+  form.lastNameValidation();
   form.emailValidation();
   form.passValidation();
   form.passConfirmation();
-  
+
   // 2. verifying user name uniqueness
-  form.getUserName(request.body.userName)
-  .then(data => {
-    if (data.length > 0) {
-      form.errors.userName = 'User name already taken.';
-      form.isFormValid = false;
-    }
-    // 3. verifying user name uniqueness
-    return form.getUserEmail(request.body.userEmail);
-  })
+  form.getUserEmail(request.body.userEmail)
   .then(data => {
     if (data.length > 0) {
       form.errors.userEmail = 'Email address already taken.';
@@ -71,15 +65,13 @@ exports.registration = (request, response, next) => {
       request.session.inputs = formData;
       response.redirect('/registration');
     } else {
-      // 4. hashing password
+      // 3. hashing password
       /*return*/ bcrypt.hash(formData.userPass, 12)
       .then(hashedPass => {
         formData.userPass = hashedPass;
         const user = new User();
-        user.addSpace(formData.userName);
+        user.addSpace(formData.userEmail);
         /*return*/ user.addUser(formData);
-      })
-      .then(() => {
         request.session.isRegistrationCompleted = true;
         response.redirect('/registration');
       })

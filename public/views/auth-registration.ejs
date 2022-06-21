@@ -20,14 +20,25 @@
       
         <form name="registration-form" action="/registration" method="POST">
             
-          <!-- User name input -->
-          <label for="user-name">User name</label><br>
-          <input type="text" id="user-name" name="userName" class="registration-input" value="<%= 
-            typeof inputs !== 'undefined' ? inputs.userName : ''
+          <!-- User first name input -->
+          <label for="first-name">First name</label><br>
+          <input type="text" id="first-name" name="firstName" class="registration-input" value="<%= 
+            typeof inputs !== 'undefined' ? inputs.firstName : ''
           %>">
           <br>
-          <label for="user-name" id="user-name-error" style="color: red;">
-            <%= typeof errors !== 'undefined' ? errors.userName : '' %>
+          <label for="first-name" id="first-name-error" style="color: red;">
+            <%= typeof errors !== 'undefined' ? errors.firstName : '' %>
+          </label>
+          <br>
+
+          <!-- User last name input -->
+          <label for="last-name">Last name</label><br>
+          <input type="text" id="last-name" name="lastName" class="registration-input" value="<%= 
+            typeof inputs !== 'undefined' ? inputs.lastName : ''
+          %>">
+          <br>
+          <label for="last-name" id="last-name-error" style="color: red;">
+            <%= typeof errors !== 'undefined' ? errors.lastName : '' %>
           </label>
           <br>
       

@@ -1,0 +1,34 @@
+#parser-filter {
+  width: 90%;
+  min-width: 500px;
+  margin: auto;
+}
+
+  form {
+
+  }
+
+    .form-group {
+      float: left;
+    }
+
+.panel-default {
+  width: 90%;
+  min-width: 500px;
+  margin: auto;
+  background-color: #a9a9a9;
+  border: 1px solid #888787;
+}
+
+  .panel-head {
+
+  }
+
+  .panel-body {
+
+  }
+
+    table {
+      background-color: #ece8e8;
+    }
+

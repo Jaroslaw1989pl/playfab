@@ -39,43 +39,46 @@ exports.profileAvatar = (request, response, next) => {
 exports.profileName = (request, response, next) => {
   let formData = {
     userId: response.locals.user.id,
-    oldName: response.locals.user.name,
-    newName: request.body.userName,
-    gold: response.locals.user.gold,
-    isPriceAccepted: request.body.isPriceAccepted ? true : false
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    // gold: response.locals.user.gold,
+    // isPriceAccepted: request.body.isPriceAccepted ? true : false
   }
-
-  const form = new NameUpdate();
-  form.setUserData(formData);
 
   request.session.inputs = request.body;
 
-  if (form.nameValidation()) {
-    form.getUserName()
-    .then(result => {
-      if (result.length > 0) {
-        form.formValidation();
-        form.errors.userName = 'User name already taken.';
-        request.session.errors = form.errors;
-        response.redirect('/profile-name');
-      } else if (result.length === 0 && !form.formValidation()) {
-        request.session.errors = form.errors
-        response.redirect('/profile-name');
-      } else if (result.length === 0 && form.formValidation()) {
+  const form = new NameUpdate();
+  form.setUserData(formData);
+  form.firstNameValidation();
+  form.lastNameValidation();
+
+  if (form.isFormValid) {
+    // form.getUserName()
+    // .then(result => {
+    //   if (result.length > 0) {
+    //     form.formValidation();
+    //     form.errors.userName = 'User name already taken.';
+    //     request.session.errors = form.errors;
+    //     response.redirect('/profile-name');
+    //   } else if (result.length === 0 && !form.formValidation()) {
+    //     request.session.errors = form.errors
+    //     response.redirect('/profile-name');
+    //   } else if (result.length === 0 && form.formValidation()) {
         form.nameUpdate()
         .then(() => {
-          form.goldUpdate();
-          form.spaceUpdate();
-          response.locals.user.name = formData.newName;
-          response.locals.user.gold = formData.gold - 100;
+          // form.goldUpdate();
+          // form.spaceUpdate();
+          response.locals.user.firstName = formData.firstName;
+          response.locals.user.lastName = formData.lastName;
+          // response.locals.user.gold = formData.gold - 100;
           return response.redirect('/profile-settings');
         })
         .catch(error => console.log(error));
-      }
-    })
-    .catch(error => console.log(error));
+    //   }
+    // })
+    // .catch(error => console.log(error));
   } else {
-    form.formValidation();
+    // form.formValidation();
     request.session.errors = form.errors;
     response.redirect('/profile-name');
   }
@@ -129,7 +132,6 @@ exports.profileEmail = (request, response, next) => {
     };
 
     form.setFormData(formData);
-
     form.findCode()
     .then(result => {
       if (Array.isArray(result) && result.length === 0) {
@@ -139,33 +141,34 @@ exports.profileEmail = (request, response, next) => {
       return form.findEmail();
     })
     .then(result => {
-      // if (result === false) form.isFormValid = false;
       if (Array.isArray(result) && result.length > 0) {
         form.isFormValid = false;
         form.errors.newEmail = 'Email addres already in use.';
-      } 
+      }
       return form.verifyPassword();
     })
     .then(result => {
       if (Array.isArray(result) && result.length > 0) return bcrypt.compare(formData.userPass, result[0].user_password);
-      else form.isFormValid = false;
+      // else form.isFormValid = false;
     })
     .then(match => {
       if (match && form.isFormValid) {
         form.updateEmail()
         .then(() => {
+          form.spaceUpdate();
           form.deleteCode();
           request.session.flash = {success: 'Email updated.'};
-          return response.redirect('/profile-settings');
+          response.locals.user.email = formData.newEmail;
+          response.redirect('/profile-settings');
         })
         .catch(error => console.log('settings-controller.js => profileEmail()', error));
+      } else {
+        if (typeof match !== 'undefined' && !match) form.errors.password = 'Incorrect password.';
+
+        request.session.errors = form.errors;
+        request.session.inputs = formData;
+        response.redirect('/profile-email');
       }
-
-      if (typeof match !== 'undefined' && !match) form.errors.password = 'Incorrect password.';
-
-      request.session.errors = form.errors;
-      request.session.inputs = formData;
-      response.redirect('/profile-email');
     })
     .catch(error => console.log('settings-controller.js => profileEmail()', error));   
   }

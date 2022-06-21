@@ -5,7 +5,8 @@ const Database = require('./../app/database.class');
 class Registration {
 
   // private fields
-  #userName;
+  #firstName;
+  #lastName;
   #userEmail;
   #userPass;
   #passConf;
@@ -13,7 +14,8 @@ class Registration {
   // public fields
   isFormValid = true;
   errors = {
-    userName: '',
+    firstName: '',
+    lastName: '',
     userEmail: '',
     userPass: '',
     passConf: ''
@@ -24,21 +26,22 @@ class Registration {
   }
 
   setUserData(formData) {
-    this.#userName = formData.userName;
+    this.#firstName = formData.firstName;
+    this.#lastName = formData.lastName;
     this.#userEmail = formData.userEmail;
     this.#userPass = formData.userPass;
     this.#passConf = formData.passConf;
   }
 
-  getUserName(userName) {
-    const query = "SELECT user_name FROM registrated_users WHERE user_name = ?";
-    return new Promise((resolve, reject) => {
-      this.database.connection.query(query, userName, (error, result, fields) => {
-        if (error) reject(error);
-        else resolve(result);
-      });
-    });
-  }
+  // getUserName(userName) {
+  //   const query = "SELECT user_name FROM registrated_users WHERE user_name = ?";
+  //   return new Promise((resolve, reject) => {
+  //     this.database.connection.query(query, userName, (error, result, fields) => {
+  //       if (error) reject(error);
+  //       else resolve(result);
+  //     });
+  //   });
+  // }
 
   getUserEmail(userEmail) {
     const query = "SELECT user_email FROM registrated_users WHERE user_email = ?";
@@ -50,14 +53,26 @@ class Registration {
     });
   }
 
-  nameValidation() {
+  firstNameValidation() {
     try {
-      if (this.#userName.length === 0) throw 'Please enter your user name.';
-      else if (/[^\w]/.test(this.#userName)) throw 'The username can only contain Latin letters, numbers and underscore.';
-      else if (this.#userName.length < 3) throw 'The username should be at least 3 characters long.';
-      else if (this.#userName.length > 24) throw 'The username should not exceed 24 characters.';    
+      if (this.#firstName.length === 0) throw 'Please enter your user name.';
+      else if (/[^\w]/.test(this.#firstName)) throw 'The username can only contain Latin letters, numbers and underscore.';
+      else if (this.#firstName.length < 3) throw 'The username should be at least 3 characters long.';
+      else if (this.#firstName.length > 24) throw 'The username should not exceed 24 characters.';    
     } catch (error) {
-      this.errors.userName = error;
+      this.errors.firstName = error;
+      this.isFormValid = false;
+    }
+  }
+
+  lastNameValidation() {
+    try {
+      if (this.#lastName.length === 0) throw 'Please enter your user name.';
+      else if (/[^\w]/.test(this.#lastName)) throw 'The username can only contain Latin letters, numbers and underscore.';
+      else if (this.#lastName.length < 3) throw 'The username should be at least 3 characters long.';
+      else if (this.#lastName.length > 24) throw 'The username should not exceed 24 characters.';    
+    } catch (error) {
+      this.errors.lastName = error;
       this.isFormValid = false;
     }
   }

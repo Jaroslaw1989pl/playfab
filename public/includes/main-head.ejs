@@ -14,26 +14,36 @@
   <nav id="top-bar">
     <header>
 
-      <a href="/"><button>Playfab</button></a>
+      <div id="top-bar-left">
+        <a href="/"><button>Playfab</button></a>
+      </div>
 
-      <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+      <div id="top-bar-middle">
 
-        <img src="<%= user.avatar %>" alt="profile avatar" class="profile-avatar">
+      </div>
+
+      <div id="top-bar-right">
+
+        <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+
+          <img src="<%= user.avatar %>" alt="profile avatar" class="profile-avatar">
+          
+          <p><%= user.firstName %></p>
+  
+          <a href="/profile-settings"><button>Settings</button></a>
+  
+          <form action="/logout" method="POST">
+            <button type="submit">Sign out</button>
+          </form>
+  
+        <% } else { %>
+  
+          <a href="/login"><button>Sign in</button></a>
+          <a href="/registration"><button>Sign up</button></a>
         
-        <p><%= user.name %></p>
+        <% } %>
 
-        <a href="/profile-settings"><button>Settings</button></a>
-
-        <form action="/logout" method="POST">
-          <button type="submit">Sign out</button>
-        </form>
-
-      <% } else { %>
-
-        <a href="/login"><button>Sign in</button></a>
-        <a href="/registration"><button>Sign up</button></a>
-      
-      <% } %>
+      </div>
 
     </header>
 
@@ -46,3 +56,15 @@
       <div class="message-error"><%= flash.error %></div>
     <% } %>
   </div>
+
+  <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+
+    <nav id="side-bar">
+      <ul>
+        <li><a href="/project-list">Projects</a></li>
+        <li><a href="/parser-list">Parsers</a></li>
+      </ul>
+    </nav>
+
+  <% } %>
+

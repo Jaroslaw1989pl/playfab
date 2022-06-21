@@ -1,0 +1,35 @@
+<%- include('../includes/main-head.ejs') %>
+
+<!-- STYLES -->
+<link rel="stylesheet" href="/styles/list.css">
+  
+  <main>
+
+    <h1>Projects</h1>
+    
+    <div class="panel-default">
+      <div class="panel-head">
+        <span class="h4">Found <%= project.length %> project(s)</span>
+      </div>
+      <div class="panel-body">
+        <table>
+          <thead>
+            <tr><th></th><th></th><th></th><th></th></tr>
+          </thead>
+          <tbody>
+            <% if (project.length) { %>
+              <% project.forEach(el => { %>
+                <tr>
+                  <td><%= el || '' %></td><td><%= el || '' %></td><td><%= el || '' %></td><td></td>
+                </tr>
+              <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div style="clear: both"></div>
+  
+<%- include('../includes/main-footer.ejs') %>

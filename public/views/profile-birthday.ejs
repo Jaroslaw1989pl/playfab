@@ -32,8 +32,8 @@
         <p>You can remove your date of birth.</p>
         <input type="submit" id="form-submit-btn" name="delSubmitBtn" value="Remove date of birth" >
 
-      <% }  
-      if (isUpdateAvailable) { %>
+      <% }  %>
+      <% if (isUpdateAvailable) { %>
 
         <input type="submit" id="form-submit-btn" name="setSubmitBtn" value="Change" >
         
@@ -42,5 +42,7 @@
     </form>
 
   </main>
+
+  <div style="clear: both"></div>
   
 <%- include('../includes/main-footer.ejs') %>

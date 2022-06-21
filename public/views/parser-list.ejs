@@ -1,0 +1,84 @@
+<%- include('../includes/main-head.ejs') %>
+
+<!-- STYLES -->
+<link rel="stylesheet" href="/styles/list.css">
+  
+  <main>
+
+    <h1>Parsers</h1>
+
+    <div id="parser-filter">
+      <form action="/parser-list" method="POST">
+
+        <div class="form-group">
+          <div class="input-group">
+            <label for="">Store</label>
+            <br>
+            <input type="text" name="store" placeholder="Store">
+          </div>
+          <div class="input-group">
+            <label for="">Keyword</label>
+            <br>
+            <input type="text" name="keyword" placeholder="Keyword">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <label for=""></label>
+            <br>
+            <input type="text" name="" placeholder="">
+          </div>
+          <div class="input-group">
+            <label for=""></label>
+            <br>
+            <input type="text" name="" placeholder="">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <label for=""></label>
+            <br>
+            <input type="text" name="" placeholder="">
+          </div>
+          <div class="input-group">
+            <label for=""></label>
+            <br>
+            <input type="text" name="" placeholder="">
+          </div>
+        </div>
+
+        <div style="clear: both"></div>
+
+        <input type="submit" name="filterBtn" value="Filter">
+      </form>
+    </div>
+    
+    <div class="panel-default">
+      <div class="panel-head">
+        <span class="h4">Found <%= parser.length %> parser(s)</span>
+        <a href="/parser-editor"><button>New parser</button></a>
+      </div>
+      <div class="panel-body">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Country</th><th>Store</th><th></th></tr>
+          </thead>
+          <tbody>
+            <% if (parser.length) { %>
+              <% parser.forEach(el => { %>
+                <tr>
+                  <td><%= el.parser_id || '' %></td><td><%= el.parser_country || '' %></td><td><%= el.parser_name || '' %></td><td></td>
+                </tr>
+              <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div style="clear: both"></div>
+  
+<%- include('../includes/main-footer.ejs') %>

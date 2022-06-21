@@ -20,6 +20,7 @@ app.use(session({secret: 'ks12256', name: 'sessionId', resave: false, saveUninit
 
 // setting up local variables passed to all views
 app.use((request, response, next) => {
+  // console.log('app.js => 23', request.session);
   response.locals.isAuthenticated = request.session.isLoggedIn;
   response.locals.user = request.session.user;
   response.locals.flash = request.session.flash;

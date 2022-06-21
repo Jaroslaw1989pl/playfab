@@ -22,18 +22,28 @@
       <form id="username-form" name="username-form" action="/profile-name" method="POST">
         
         <p>You can change your username displayed in the game and on playfab.pl websites. Username change is available once every 14 days.</p>       
-        <!-- User name input -->
-        <label for="user-name">1. Enter a new username:</label><br>
-        <input type="text" id="user-name" name="userName" class="registration-input" value="<%= 
-          typeof inputs !== 'undefined' ? inputs.userName : ''
+        <!-- User first name input -->
+        <label for="first-name">1. Enter a new first name:</label><br>
+        <input type="text" id="first-name" name="firstName" class="registration-input" value="<%= 
+          typeof inputs !== 'undefined' ? inputs.firstName : ''
         %>">
-        <br><label for="user-name" id="user-name-error" style="color: red;">
-          <%= typeof errors !== 'undefined' ? errors.userName : '' %>
+        <br><label for="first-name" id="first-name-error" style="color: red;">
+          <%= typeof errors !== 'undefined' ? errors.firstName : '' %>
+        </label>
+        <br>
+
+        <!-- User last name input -->
+        <label for="last-name">1. Enter a new last name:</label><br>
+        <input type="text" id="last-name" name="lastName" class="registration-input" value="<%= 
+          typeof inputs !== 'undefined' ? inputs.lastName : ''
+        %>">
+        <br><label for="last-name" id="last-name-error" style="color: red;">
+          <%= typeof errors !== 'undefined' ? errors.lastName : '' %>
         </label>
         <br>
 
         <!-- User payment input -->
-        <label for="price-accept">2. Accept a payment method:</label><br>
+        <!-- <label for="price-accept">2. Accept a payment method:</label><br>
         <p>Price: 100 gold</p>
         <p>Your gold: <%= user.gold %></p>
         <% if (user.gold < 100) { %>
@@ -46,12 +56,16 @@
           </label>
           <br>
           <input type="submit" id="form-submit-btn" name="formSubmitBtn" value="Change" >
-        <% } %>
-
+          <% } %> -->
+          
+        <input type="submit" id="form-submit-btn" name="formSubmitBtn" value="Change" >
+      
       </form>
 
     <% } %>
 
   </main>
+
+  <div style="clear: both"></div>
   
 <%- include('../includes/main-footer.ejs') %>

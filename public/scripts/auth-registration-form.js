@@ -1,35 +1,45 @@
-// USER NAME VALIDATION
-if (document.getElementById('user-name')) {
+// USER FIRST NAME VALIDATION
+if (document.getElementById('first-name')) {
 
   const nameRegex = /[^\w]/;
-  const userNameInput = document.getElementById('user-name');
-  const userNameError = document.getElementById('user-name-error');
+  const firstNameInput = document.getElementById('first-name');
+  const firstNameError = document.getElementById('first-name-error');
 
   const nameValidation = () => {
 
     try {
-      
-      if (userNameInput.value == '') userNameError.textContent = '';
-      else if (nameRegex.test(userNameInput.value)) throw 'The username can only contain Latin letters, numbers and underscore.';
-      else if (userNameInput.value.length < 3) throw 'The username should be at least 3 characters long.';
-      else if (userNameInput.value.length > 24) throw 'The username should not exceed 24 characters.';
-      else {
-        const xhttp = new XMLHttpRequest();
-        xhttp.onload = () => {
-          if (xhttp.status == 200 && xhttp.readyState == 4) {
-            if (JSON.parse(xhttp.responseText)) userNameError.textContent = 'User name already taken.';
-            else userNameError.textContent = '';
-          }
-        }
-        xhttp.open('GET', `/registration-get-user-name?userName=${userNameInput.value}`, true);
-        xhttp.send();
-      }
+      if (nameRegex.test(firstNameInput.value)) throw 'The username can only contain Latin letters, numbers and underscore.';
+      else if (firstNameInput.value.length < 3) throw 'The username should be at least 3 characters long.';
+      else if (firstNameInput.value.length > 24) throw 'The username should not exceed 24 characters.';
+      else firstNameError.textContent = ''; 
     } catch (error) {
-      userNameError.textContent = error;
+      firstNameError.textContent = error;
     }
   };
 
-  userNameInput.addEventListener('input', nameValidation);
+  firstNameInput.addEventListener('input', nameValidation);
+}
+
+// USER LAST NAME VALIDATION
+if (document.getElementById('last-name')) {
+
+  const nameRegex = /[^\w]/;
+  const lastNameInput = document.getElementById('last-name');
+  const lastNameError = document.getElementById('last-name-error');
+
+  const nameValidation = () => {
+
+    try {
+      if (nameRegex.test(lastNameInput.value)) throw 'The username can only contain Latin letters, numbers and underscore.';
+      else if (lastNameInput.value.length < 3) throw 'The username should be at least 3 characters long.';
+      else if (lastNameInput.value.length > 24) throw 'The username should not exceed 24 characters.';
+      else lastNameError.textContent = '';
+    } catch (error) {
+      lastNameError.textContent = error;
+    }
+  };
+
+  lastNameInput.addEventListener('input', nameValidation);
 }
 
 

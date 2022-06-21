@@ -5,8 +5,11 @@ const { protected } = require('./../middleware/auth');
 const viewsPublic = require('../controllers/views-public-controller');
 const viewsAuth = require('./../controllers/views-auth-controller');
 const viewsProfile = require('../controllers/views-profile-controller');
+const viewsProject = require('./../controllers/views-project-controller');
+const viewsParser = require('./../controllers/views-parser-controller');
 const auth = require('./../controllers/auth-controller');
 const settings = require('./../controllers/settings-controller');
+const parser = require('./../controllers/parser-controller');
 const error = require('./../controllers/error-controller');
 
 
@@ -14,14 +17,12 @@ const router = express.Router();
 
 // public views routes
 router.get('/', viewsPublic.home);
-router.get('/games', viewsPublic.games);
-router.route('/games/checkers').get(viewsPublic.gamesCheckers);
 
 // user authentication routes
 router.route('/login').get(viewsAuth.loginForm).post(auth.login);
 
 router.route('/registration').get(viewsAuth.registrationForm).post(auth.registration);
-router.route('/registration-get-user-name').get(auth.findUserName).post();
+// router.route('/registration-get-user-name').get(auth.findUserName).post();
 router.route('/registration-get-user-email').get(auth.findUserEmail).post();
 
 router.route('/reset-password').get(viewsAuth.resetPassword).post(auth.resetPassword);
@@ -37,8 +38,12 @@ router.route('/profile-email').get(protected, viewsProfile.profileEmail).post(se
 router.route('/profile-password').get(protected, viewsProfile.profilePassword).post(settings.profilePassword);
 
 router.route('/profile-delete').get(protected, viewsProfile.profileDelete).post(auth.delete);
-
 router.route('/logout').get().post(auth.logout);
+
+router.route('/project-list').get(protected, viewsProject.projectList).post();
+
+router.route('/parser-list').get(protected, viewsParser.parserList).post(parser.parserList);
+router.route('/parser-editor').get(protected, viewsParser.parserEditor).post();
 
 // error views
 router.use(error.notFound);

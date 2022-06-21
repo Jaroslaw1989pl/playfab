@@ -1,0 +1,26 @@
+<%- include('../includes/main-head.ejs') %>
+  
+  <main>
+
+    <div class="page-content-nav-bar">
+      <h3>Edit [nazwa parsera]</h3>
+      <div class="content-right">
+        <a href="/parser-editor"><button>Basic</button></a>
+        <a href=""><button>Lists</button></a>
+        <a href=""><button>Cards</button></a>
+        <a href=""><button>Errors</button></a>
+      </div>
+    </div>
+
+    <div class="page-content-body">
+      <form action="/parser-editor" method="post">
+
+        <input type="submit" name="saveBtn" value="Save">
+      </form>
+    </div>
+
+  </main>
+
+  <div style="clear: both"></div>
+  
+<%- include('../includes/main-footer.ejs') %>

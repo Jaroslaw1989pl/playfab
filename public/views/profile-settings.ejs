@@ -30,7 +30,7 @@
               <img src="/assets/img/settings/settings-tmp.png" alt="info-cell-icon">
             </div>
             <div class="info-cell-value">
-              <h3><%= user.name %></h3>
+              <h3><%= user.firstName + ' ' + user.lastName %></h3>
             </div>
             <div class="info-cell-edit">
               <a href="/profile-name">Change</a>
@@ -118,5 +118,7 @@
     </section>
 
   </main>
+
+  <div style="clear: both"></div>
   
 <%- include('../includes/main-footer.ejs') %>
