@@ -1,5 +1,7 @@
 // custom modules
+const Editor = require('../models/parser/editor.class');
 const ParserList = require('../models/parser/parser-list.class');
+
 
 exports.parserList = (request, response, next) => {
   const list = new ParserList();
@@ -21,10 +23,63 @@ exports.parserList = (request, response, next) => {
 };
 
 exports.parserEditor = (request, response, next) => {
-  let data = {
-    html: {
-      title: 'Playfab | Parsers editor'
-    }
-  };
-  response.render('parser-editor.ejs', data);
+  if (request.params.id) {
+
+    const editor = new Editor();
+
+    editor.loadFromDatabase('', request.params.id)
+    .then(result => {
+      return editor.loadFromFile(result[0].parser_name)
+    })
+    .then(file => {
+      let data = {
+        html: {
+          title: 'Playfab | Parsers editor'
+        },
+        parser: JSON.parse(file)
+      };
+      response.render('parser-editor.ejs', data);
+    })
+    .catch(error => console.log('views-parser => parserEditor() > loading file', error));
+
+  } else {
+
+    let data = {
+      html: {
+        title: 'Playfab | Parsers editor'
+      }
+    };
+    response.render('parser-editor.ejs', data);
+  }
+};
+
+exports.parserListEditor = (request, response, next) => {
+  if (request.params.id) {
+
+    const editor = new Editor();
+
+    editor.loadFromDatabase('', request.params.id)
+    .then(result => {
+      return editor.loadFromFile(result[0].parser_name)
+    })
+    .then(file => {
+      let data = {
+        html: {
+          title: 'Playfab | Parsers lists editor'
+        },
+        parser: JSON.parse(file)
+      };
+      response.render('parser-list-editor.ejs', data);
+    })
+    .catch(error => console.log('views-parser => parserEditor() > loading file', error));
+
+  } else {
+
+    let data = {
+      html: {
+        title: 'Playfab | Parsers lists editor'
+      }
+    };
+    response.render('parser-list-editor.ejs', data);
+  }
 };

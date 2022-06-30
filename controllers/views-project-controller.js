@@ -1,6 +1,7 @@
 // custom modules
 const ProjectList = require('../models/project/project-list.class');
 
+
 exports.projectList = (request, response, next) => {
   const list = new ProjectList();
 
@@ -18,4 +19,13 @@ exports.projectList = (request, response, next) => {
     response.render('project-list.ejs', data);
   })
   .catch(error => console.log('views-parser => projectList()', error));
+};
+
+exports.projectEditor = (request, response, next) => {
+  let data = {
+    html: {
+      title: 'Playfab | Project editor'
+    }
+  };
+  response.render('project-editor.ejs', data);
 };

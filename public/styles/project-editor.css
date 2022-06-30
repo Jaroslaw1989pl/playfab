@@ -1,0 +1,49 @@
+.page-content-nav-bar {
+  background-color: #bfc4ad;
+}
+
+  .content-top {
+    background-color: rgb(255, 140, 0);
+  }
+
+  .content-middle {
+    background-color: chartreuse;
+  }
+
+  .content-bottom {
+    background-color: rgb(212, 0, 42);
+  }
+
+.page-content-body {
+  width: 100%;
+  background-color: blue;
+}
+
+  form {
+    width: 100%;
+    background-color: cadetblue;
+  }
+
+    /* .form-group {
+      width: 95%;
+      margin: auto;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      background-color: rgb(189, 107, 148);
+    }
+
+      .form-input {
+        display: inline-block;
+        width: 300px;
+      }
+
+        .scroll-box {
+          width: 300px;
+          height: 150px;
+          overflow: scroll;
+        }
+
+        .editor-input-tooltip {
+          background-color: #e4ff83;
+          border-radius: 5px;
+        } */

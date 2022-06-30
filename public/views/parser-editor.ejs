@@ -1,22 +1,162 @@
 <%- include('../includes/main-head.ejs') %>
-  
+
+<!-- STYLES -->
+<link rel="stylesheet" href="/styles/parser-editor.css">
+<!-- SCRIPTS -->
+<script src="/3rd_party/ace_ide/ace.js" defer></script>
+<script src="/3rd_party/ace_ide/theme-monokai.js" defer></script>
+<script src="/scripts/parser-editor.js" defer></script>
+
   <main>
 
     <div class="page-content-nav-bar">
-      <h3>Edit [nazwa parsera]</h3>
       <div class="content-right">
-        <a href="/parser-editor"><button>Basic</button></a>
-        <a href=""><button>Lists</button></a>
+        <h3><%= typeof parser !== 'undefined' ? parser.basic.name : 'Create new parser' %></h3>
+      </div>
+      <div class="content-right">
+        <a href="/parser-editor<%= typeof parser !== 'undefined' ? '/' + parser.basic.id : '' %>"><button>Basic</button></a>
+        <a href="/parser-list-editor<%= typeof parser !== 'undefined' ? '/' + parser.basic.id : '' %>"><button>Lists</button></a>
         <a href=""><button>Cards</button></a>
         <a href=""><button>Errors</button></a>
       </div>
+      <div style="clear: both"></div>
     </div>
 
     <div class="page-content-body">
+
       <form action="/parser-editor" method="post">
 
-        <input type="submit" name="saveBtn" value="Save">
+        
+        <div class="form-group">
+          <!-- PARSER NAME -->
+          <div class="form-input">
+            <label for="parser-name">Parser name</label>
+            <br>
+            <% if (typeof parser !== 'undefined') { %>
+              <input type="text" name="parserId" value="<%= parser.basic.id %>" hidden>
+              <input type="text" id="parser-name" name="parserName" value="<%= parser.basic.name %>" readonly>
+            <% } else { %>
+              <input type="text" id="parser-name" name="parserName">
+            <% } %>  
+            <br>
+            <span class="editor-input-tooltip">Name of the parser.</span>
+          </div>
+          <div style="clear: both;"></div>
+        </div>
+
+        <div class="form-group">
+          <!-- PARSER PROXY SERVERS -->
+          <div class="form-input">
+            <label for="">Parser proxy servers</label>
+            <br>
+            <div class="scroll-box">
+              <input type="checkbox" name="proxy" id="proxy-00" value="0" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('0')) ? 'checked' : '' %> />
+              <label for="proxy-12">proxy-00</label><br />
+              <input type="checkbox" name="proxy" id="proxy-01" value="1" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('1')) ? 'checked' : '' %> />
+              <label for="proxy-01">proxy-01</label><br />
+              <input type="checkbox" name="proxy" id="proxy-02" value="2" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('2')) ? 'checked' : '' %> />
+              <label for="proxy-02">proxy-02</label><br />
+              <input type="checkbox" name="proxy" id="proxy-03" value="3" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('3')) ? 'checked' : '' %> />
+              <label for="proxy-03">proxy-03</label><br />
+              <input type="checkbox" name="proxy" id="proxy-04" value="4" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('4')) ? 'checked' : '' %> />
+              <label for="proxy-04">proxy-04</label><br />
+              <input type="checkbox" name="proxy" id="proxy-05" value="5" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('5')) ? 'checked' : '' %> />
+              <label for="proxy-05">proxy-05</label><br />
+              <input type="checkbox" name="proxy" id="proxy-06" value="6" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('6')) ? 'checked' : '' %> />
+              <label for="proxy-06">proxy-06</label><br />
+              <input type="checkbox" name="proxy" id="proxy-07" value="7" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('7')) ? 'checked' : '' %> />
+              <label for="proxy-07">proxy-07</label><br />
+              <input type="checkbox" name="proxy" id="proxy-08" value="8" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('8')) ? 'checked' : '' %> />
+              <label for="proxy-08">proxy-08</label><br />
+              <input type="checkbox" name="proxy" id="proxy-09" value="9" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('9')) ? 'checked' : '' %> />
+              <label for="proxy-09">proxy-09</label><br />
+              <input type="checkbox" name="proxy" id="proxy-10" value="10" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('10')) ? 'checked' : '' %> />
+              <label for="proxy-10">proxy-10</label><br />
+              <input type="checkbox" name="proxy" id="proxy-11" value="11" <%= 
+                (typeof parser !== 'undefined' && parser.basic.proxy.includes('11')) ? 'checked' : '' %> />
+              <label for="proxy-11">proxy-11</label><br />
+            </div>
+            <!-- <div class="scroll-box">
+              <input type="checkbox" name="proxy00" id="proxy-00" value="0"/>
+              <label for="proxy-12">proxy-00</label><br />
+              <input type="checkbox" name="proxy01" id="proxy-01" value="1"/>
+              <label for="proxy-01">proxy-01</label><br />
+              <input type="checkbox" name="proxy02" id="proxy-02" value="2"/>
+              <label for="proxy-02">proxy-02</label><br />
+              <input type="checkbox" name="proxy03" id="proxy-03" value="3"/>
+              <label for="proxy-03">proxy-03</label><br />
+              <input type="checkbox" name="proxy04" id="proxy-04" value="4"/>
+              <label for="proxy-04">proxy-04</label><br />
+              <input type="checkbox" name="proxy05" id="proxy-05" value="5"/>
+              <label for="proxy-05">proxy-05</label><br />
+              <input type="checkbox" name="proxy06" id="proxy-06" value="6"/>
+              <label for="proxy-06">proxy-06</label><br />
+              <input type="checkbox" name="proxy07" id="proxy-07" value="7"/>
+              <label for="proxy-07">proxy-07</label><br />
+              <input type="checkbox" name="proxy08" id="proxy-08" value="8"/>
+              <label for="proxy-08">proxy-08</label><br />
+              <input type="checkbox" name="proxy09" id="proxy-09" value="9"/>
+              <label for="proxy-09">proxy-09</label><br />
+              <input type="checkbox" name="proxy10" id="proxy-10" value="10"/>
+              <label for="proxy-10">proxy-10</label><br />
+              <input type="checkbox" name="proxy11" id="proxy-11" value="11"/>
+              <label for="proxy-11">proxy-11</label><br />
+            </div> -->
+            <span class="editor-input-tooltip">A group proxies to be used</span>
+          </div>
+          <!-- PARSER USER AGENT -->
+          <div class="form-input">
+            <label for="parser-user-agent">Parser user agent</label>
+            <br>
+            <textarea id="parser-user-agent" name="parserUserAgent" cols="30" rows="10"><%= 
+              typeof parser !== 'undefined' ? parser.basic.userAgent.join('[-]') : '' 
+            %></textarea>
+            <br>
+            <span class="editor-input-tooltip">[Przykładowy user agent]</span>
+          </div>
+          <!-- PARSER HEADERS -->
+          <div class="form-input">
+            <label for="parser-headers">Parser headers</label>
+            <br>
+            <textarea id="parser-headers" name="parserHeaders" cols="30" rows="10"></textarea>
+            <br>
+            <span class="editor-input-tooltip">Headers set in the puppeteer.</span>
+          </div>
+          <div style="clear: both;"></div>
+        </div>
+        
+        <div class="form-group">
+          <!-- PARSER IDE -->
+          <div class="form-input">
+            <label for="parser-ide">Parser evaluated code</label>
+            <br>
+            <textarea name="parserIdeText" id="editor-text-area" cols="30" rows="10" hidden><%= 
+              typeof parser !== 'undefined' ? parser.basic.code : '' 
+            %></textarea>
+            <div id="parser-ide" name="parserIde" style="width: 400px; height: 400px;"></div>
+            <br>
+            <span class="editor-input-tooltip">Your own code.</span>
+          </div>
+          <div style="clear: both;"></div>
+        </div>
+        <br>
+        <br>
+        <!-- PARSER SAVE BUTTON -->
+        <input type="submit" id="save-btn" name="saveBtn" value="Save">
+        
       </form>
+
     </div>
 
   </main>

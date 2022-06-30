@@ -96,13 +96,17 @@ class User {
 
   deleteSpace(name) {
     if (fs.existsSync('spaces/' + name)) {
-      fs.rm('spaces/' + name, { recursive: true}, error => console.log(error));
+      fs.rm('spaces/' + name, { recursive: true}, error => {
+        if (error) console.log(error);
+      });
     }
   }
 
   deleteAvatar(avatar) {
     if (fs.existsSync('public/' + avatar)) {
-      fs.unlink('public/' + avatar, error => console.log(error));
+      fs.unlink('public/' + avatar, error => {
+        if (error) console.log(error);
+      });
     }
   }
 }

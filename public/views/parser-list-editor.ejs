@@ -1,0 +1,111 @@
+<%- include('../includes/main-head.ejs') %>
+
+<!-- STYLES -->
+<link rel="stylesheet" href="/styles/parser-editor.css">
+<!-- SCRIPTS -->
+<script src="/3rd_party/ace_ide/ace.js" defer></script>
+<script src="/3rd_party/ace_ide/theme-monokai.js" defer></script>
+<script src="/scripts/parser-editor.js" defer></script>
+
+  <main>
+
+    <div class="page-content-nav-bar">
+      <div class="content-right">
+        <h3><%= typeof parser !== 'undefined' ? parser.basic.name : 'Create new parser' %></h3>
+      </div>
+      <div class="content-right">
+        <a href="/parser-editor"><button>Basic</button></a>
+        <a href=""><button>Lists</button></a>
+        <a href=""><button>Cards</button></a>
+        <a href=""><button>Errors</button></a>
+      </div>
+      <div style="clear: both"></div>
+    </div>
+
+    <div class="page-content-body">
+
+      <form action="/parser-list-editor" method="post">
+
+        
+        <div class="form-group">
+          <!-- PARSER NAME -->
+          <!-- <div class="form-input">
+            <label for="parser-name">Parser name</label>
+            <br>
+            <% if (typeof parser !== 'undefined') { %>
+              <input type="text" name="parserId" value="<%= parser.basic.id %>" hidden>
+              <input type="text" id="parser-name" name="parserName" value="<%= parser.basic.name %>" readonly>
+            <% } else { %>
+              <input type="text" id="parser-name" name="parserName">
+            <% } %>  
+            <br>
+            <span class="editor-input-tooltip">Name of the parser.</span>
+          </div>
+          <div style="clear: both;"></div> -->
+        </div>
+
+        
+
+        <div class="tab-panel">
+          <p><b>Keyword search</b></p>
+
+          <div class="form-group">
+            <div class="form-input">
+              <label for="search-url">Search url</label>
+              <br>
+              <input type="text" id="search-url" name="searchUrl" value="<%= 
+                typeof parser !== 'undefined' ? parser.basic.searchUrl : '' %>">
+              <br>
+              <span class="editor-input-tooltip">The search URL for the search engine. Under the {keyword} variable there is search keyword. Example: https://www.google.com/search?q={keyword}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel">
+          <p><b>Pagination</b></p>
+
+          <div class="form-group">
+            <div class="form-input">
+              <label for="next-page-selector">Next page selector</label>
+              <br>
+              <input type="text" id="next-page-selector" name="nextPageSelector" value="<%= 
+                typeof parser !== 'undefined' ? parser.basic.nextPageSelector : '' %>">
+              <br>
+              <span class="editor-input-tooltip"></span>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        
+        <div class="form-group">
+          <!-- PARSER IDE -->
+          <!-- <div class="form-input">
+            <label for="parser-ide">Parser evaluated code</label>
+            <br>
+            <textarea name="parserIdeText" id="editor-text-area" cols="30" rows="10" hidden><%= 
+              typeof parser !== 'undefined' ? parser.basic.code : '' 
+            %></textarea>
+            <div id="parser-ide" name="parserIde" style="width: 400px; height: 400px;"></div>
+            <br>
+            <span class="editor-input-tooltip">Your own code.</span>
+          </div>
+          <div style="clear: both;"></div> -->
+        </div>
+        <br>
+        <br>
+        <!-- PARSER SAVE BUTTON -->
+        <input type="submit" id="save-btn" name="saveBtn" value="Save">
+
+      </form>
+
+    </div>
+
+  </main>
+
+  <div style="clear: both"></div>
+  
+<%- include('../includes/main-footer.ejs') %>

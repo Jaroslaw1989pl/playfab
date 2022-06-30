@@ -63,13 +63,20 @@
       <div class="panel-body">
         <table>
           <thead>
-            <tr><th>ID</th><th>Country</th><th>Store</th><th></th></tr>
+            <tr><th>ID</th><th>Country</th><th>Store</th><th>Options</th></tr>
           </thead>
           <tbody>
             <% if (parser.length) { %>
               <% parser.forEach(el => { %>
                 <tr>
-                  <td><%= el.parser_id || '' %></td><td><%= el.parser_country || '' %></td><td><%= el.parser_name || '' %></td><td></td>
+                  <td><%= el.parser_id || '' %></td>
+                  <td><%= el.parser_country || 'Country' %></td>
+                  <td><a href="/parser-editor/<%= el.parser_id %>"><%= el.parser_name || '' %></a></td>
+                  <td>
+                    <form class="option" action="/parser-delete/<%= el.parser_name %>" method="post">
+                      <button type="submit">Del</button>
+                    </form>
+                  </td>
                 </tr>
               <% }) %>
             <% } %>

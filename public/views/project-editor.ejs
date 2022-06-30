@@ -1,0 +1,37 @@
+<%- include('../includes/main-head.ejs') %>
+
+<!-- STYLES -->
+<link rel="stylesheet" href="/styles/project-editor.css">
+
+  <main>
+
+    <div class="page-content-nav-bar">
+      <div class="content-top">
+        <h3><%= typeof project !== 'undefined' ? project.name : 'Create new project' %></h3>
+      </div>
+      <div class="content-middle">
+        <p class="tab-title">[tytuł zakładki]</p>
+      </div>
+      <div class="content-bottom">
+        <a href=""><button>Basic information</button></a>
+        <a href=""><button>Stores & URLs</button></a>
+        <a href=""><button>Keywords</button></a>
+      </div>
+      <div style="clear: both"></div>
+    </div>
+
+    <div class="page-content-body">
+      <form action="/project-editor-save" method="post">
+
+        <!-- PROJECT SAVE BUTTON -->
+        <input type="submit" id="save-btn" name="saveBtn" value="Save">
+
+      </form>
+
+    </div>
+
+  </main>
+
+  <div style="clear: both"></div>
+  
+<%- include('../includes/main-footer.ejs') %>

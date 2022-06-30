@@ -1,0 +1,49 @@
+.page-content-nav-bar {
+  background-color: #e4ff83;
+}
+
+  .content-left {
+    float: left;
+    width: 50%;
+  }
+
+  .content-right {
+    float: left;
+    text-align: right;
+    width: 50%;
+  }
+
+.page-content-body {
+  width: 100%;
+  background-color: burlywood;
+}
+
+  form {
+    width: 100%;
+    background-color: cadetblue;
+  }
+
+    .form-group {
+      width: 95%;
+      margin: auto;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      background-color: rgb(189, 107, 148);
+    }
+
+      .form-input {
+        /* float: left; */
+        display: inline-block;
+        width: 300px;
+      }
+
+        .scroll-box {
+          width: 300px;
+          height: 150px;
+          overflow: scroll;
+        }
+
+        .editor-input-tooltip {
+          background-color: #e4ff83;
+          border-radius: 5px;
+        }

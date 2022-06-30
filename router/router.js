@@ -9,6 +9,7 @@ const viewsProject = require('./../controllers/views-project-controller');
 const viewsParser = require('./../controllers/views-parser-controller');
 const auth = require('./../controllers/auth-controller');
 const settings = require('./../controllers/settings-controller');
+const editor = require('./../controllers/editor-controller');
 const parser = require('./../controllers/parser-controller');
 const error = require('./../controllers/error-controller');
 
@@ -41,9 +42,14 @@ router.route('/profile-delete').get(protected, viewsProfile.profileDelete).post(
 router.route('/logout').get().post(auth.logout);
 
 router.route('/project-list').get(protected, viewsProject.projectList).post();
+router.route('/project-editor').get(protected, viewsProject.projectEditor).post();
 
 router.route('/parser-list').get(protected, viewsParser.parserList).post(parser.parserList);
-router.route('/parser-editor').get(protected, viewsParser.parserEditor).post();
+router.route('/parser-editor').get(protected, viewsParser.parserEditor).post(editor.saveBasic);
+router.route('/parser-editor/:id').get(protected, viewsParser.parserEditor).post();
+router.route('/parser-list-editor').get(protected, viewsParser.parserListEditor).post(editor.saveList);
+router.route('/parser-list-editor/:id').get(protected, viewsParser.parserListEditor).post();
+router.route('/parser-delete/:name').get().post(parser.parserDelete);
 
 // error views
 router.use(error.notFound);
